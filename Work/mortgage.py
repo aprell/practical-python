@@ -1,4 +1,4 @@
-# Exercises 1.7-1.11
+# Exercises 1.7-1.11, 1.17
 
 principal = 500000.0
 rate = 0.05
@@ -16,11 +16,9 @@ while principal > payment:
     if extra_payment_start_month <= month <= extra_payment_end_month:
         principal -= extra_payment
         total_paid += extra_payment
-    print(month, round(total_paid, 2), round(principal, 2))
+    print(f"{month:5d}{total_paid:12.2f}{principal:12.2f}")
     month += 1
 
 total_paid += principal
 principal = 0
-print(month, round(total_paid, 2), round(principal, 2))
-
-print('Total paid', round(total_paid, 2), 'over', month, 'months')
+print(f"{month:5d}{total_paid:12.2f}{principal:12.2f}")
