@@ -1,16 +1,17 @@
-# Exercises 1.27, 1.30, 1.31
+# Exercises 1.27, 1.30-1.32
 
+import csv
 from sys import stderr
 
 def portfolio_cost(filename):
     portfolio_price = 0
     with open(filename, "rt") as file:
+        lines = csv.reader(file)
         # Skip header
-        next(file)
-        for line in file:
+        next(lines)
+        for line in lines:
             try:
-                line = line.split(",")
-                name = line[0].strip('"')
+                name = line[0]
                 shares = int(line[1])
                 price = float(line[2])
                 purchase_price = shares * price
