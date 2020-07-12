@@ -1,4 +1,4 @@
-# Exercise 2.4
+# Exercises 2.4, 2.5
 
 import csv
 import sys
@@ -12,7 +12,11 @@ def read_portfolio(filename):
         for line in lines:
             try:
                 portfolio.append(
-                    (line[0], int(line[1]), float(line[2]))
+                    {
+                        "name": line[0],
+                        "shares": int(line[1]),
+                        "price": float(line[2])
+                    }
                 )
             except ValueError:
                 print("Warning: skipping", line, file=sys.stderr)
@@ -21,7 +25,8 @@ def read_portfolio(filename):
 def portfolio_cost(filename):
     portfolio = read_portfolio(filename)
     portfolio_price = 0
-    for name, shares, price in portfolio:
+    for holding in portfolio:
+        name, shares, price = holding["name"], holding["shares"], holding["price"]
         purchase_price = shares * price
         print(f"{name:5}: {shares:3} x {price:5.2f} = {purchase_price:8.2f}")
         portfolio_price += purchase_price
