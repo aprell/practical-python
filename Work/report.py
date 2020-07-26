@@ -1,5 +1,6 @@
 # Exercises 2.4-2.7
 # Exercises 2.9-2.12
+# Exercise 2.16
 
 from copy import deepcopy
 import csv
@@ -20,15 +21,15 @@ def read_portfolio(filename):
     portfolio = []
     with open(filename, "rt") as file:
         lines = csv.reader(file)
-        # Skip header
-        next(lines)
+        keys = next(lines)
         for line in lines:
+            record = dict(zip(keys, line))
             try:
                 portfolio.append(
                     {
-                        "name": line[0],
-                        "shares": int(line[1]),
-                        "price": float(line[2])
+                        "name": record["name"],
+                        "shares": int(record["shares"]),
+                        "price": float(record["price"])
                     }
                 )
             except ValueError:

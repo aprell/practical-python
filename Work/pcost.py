@@ -1,5 +1,5 @@
 # Exercises 1.27, 1.30-1.33
-# Exercise 2.15
+# Exercises 2.15, 2.16
 
 import csv
 import sys
@@ -8,13 +8,13 @@ def portfolio_cost(filename):
     portfolio_price = 0
     with open(filename, "rt") as file:
         lines = csv.reader(file)
-        # Skip header
-        next(lines)
+        keys = next(lines)
         for lineno, line in enumerate(lines, start=1):
+            record = dict(zip(keys, line))
             try:
-                name = line[0]
-                shares = int(line[1])
-                price = float(line[2])
+                name = record["name"]
+                shares = int(record["shares"])
+                price = float(record["price"])
                 purchase_price = shares * price
                 print(f"{name:5}: {shares:3} x {price:5.2f} = {purchase_price:8.2f}")
                 portfolio_price += purchase_price
