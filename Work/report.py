@@ -65,9 +65,8 @@ def make_report(portfolio, prices):
 
 def print_report(portfolio, prices):
     headers = ("Name", "Shares", "Price", "Change")
-    hlines = (10 * "-", 10 * "-", 10 * "-", 10 * "-")
     print("%10s %10s %10s %10s" % headers)
-    print(" ".join(hlines))
+    print(" ".join((10 * "-",) * 4))
     for line in make_report(portfolio, prices):
         line["price"] = "$%.2f" % line["price"]
         print("{name:>10s} {shares:>10d} {price:>10s} {change:>+10.2f}".format_map(line))
