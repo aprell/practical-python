@@ -1,4 +1,5 @@
 # Exercises 1.27, 1.30-1.33
+# Exercise 2.15
 
 import csv
 import sys
@@ -9,7 +10,7 @@ def portfolio_cost(filename):
         lines = csv.reader(file)
         # Skip header
         next(lines)
-        for line in lines:
+        for lineno, line in enumerate(lines, start=1):
             try:
                 name = line[0]
                 shares = int(line[1])
@@ -18,7 +19,7 @@ def portfolio_cost(filename):
                 print(f"{name:5}: {shares:3} x {price:5.2f} = {purchase_price:8.2f}")
                 portfolio_price += purchase_price
             except ValueError:
-                print("Warning: skipping", line, file=sys.stderr)
+                print(f"Missing data in line {lineno}:", line, file=sys.stderr)
     return portfolio_price
 
 if len(sys.argv) == 2:
