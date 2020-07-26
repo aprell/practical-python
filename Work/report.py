@@ -1,6 +1,6 @@
 # Exercises 2.4-2.7
 # Exercises 2.9-2.12
-# Exercises 2.16, 2.20
+# Exercises 2.16, 2.20, 2.24, 2.25
 
 from copy import deepcopy
 import csv
@@ -22,16 +22,14 @@ def read_portfolio(filename):
     with open(filename, "rt") as file:
         lines = csv.reader(file)
         keys = next(lines)
+        # Keys of interest and the types of their values
+        types = {"name": str, "shares": int, "price": float}
         for lineno, line in enumerate(lines, start=1):
             record = dict(zip(keys, line))
             try:
-                portfolio.append(
-                    {
-                        "name": record["name"],
-                        "shares": int(record["shares"]),
-                        "price": float(record["price"])
-                    }
-                )
+                portfolio.append({
+                    name: cast(record[name]) for name, cast in types.items()
+                })
             except ValueError:
                 print(f"Skipping {filename}, line {lineno}:", line, file=sys.stderr)
     return portfolio
