@@ -1,6 +1,7 @@
 # Exercises 2.4-2.7
 # Exercises 2.9-2.12
 # Exercises 2.16, 2.20, 2.24, 2.25
+# Exercises 3.1, 3.2
 
 from copy import deepcopy
 import csv
@@ -68,24 +69,29 @@ def make_report(portfolio, prices):
 def print_report(portfolio, prices):
     headers = ("Name", "Shares", "Price", "Change")
     print("%10s %10s %10s %10s" % headers)
-    print(" ".join((10 * "-",) * 4))
+    print(" ".join((10 * "-",) * len(headers)))
     for line in make_report(portfolio, prices):
         line["price"] = "$%.2f" % line["price"]
         print("{name:>10s} {shares:>10d} {price:>10s} {change:>+10.2f}".format_map(line))
+
+def portfolio_report(portfolio_filename, prices_filename):
+    portfolio = read_portfolio(portfolio_filename)
+    prices = read_prices(prices_filename)
+    print_report(portfolio, prices)
 
 if len(sys.argv) == 2:
     filename = sys.argv[1]
 else:
     filename = "Data/portfolio.csv"
 
-portfolio = read_portfolio(filename)
+#portfolio = read_portfolio(filename)
 #cost = portfolio_cost(portfolio, verbose=False)
 #print(f"\n\u2211 {cost:,.2f}\n")
 
-prices = read_prices("Data/prices.csv")
+#prices = read_prices("Data/prices.csv")
 #value = portfolio_value(portfolio, prices, verbose=False)
 #print(f"\n\u2211 {value:,.2f}\n")
 
 #print(f"{value:,.2f} - {cost:,.2f} = {value - cost:,.2f}")
 
-print_report(portfolio, prices)
+portfolio_report(filename, "Data/prices.csv")
