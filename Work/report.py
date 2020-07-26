@@ -10,11 +10,11 @@ def read_prices(filename):
     prices = {}
     with open(filename, "rt") as file:
         lines = csv.reader(file)
-        for line in lines:
+        for lineno, line in enumerate(lines, start=1):
             try:
                 prices[line[0]] = float(line[1])
             except (IndexError, ValueError):
-                print("Warning: skipping", line, file=sys.stderr)
+                print(f"Skipping {filename}, line {lineno}:", line, file=sys.stderr)
     return prices
 
 def read_portfolio(filename):
@@ -22,7 +22,7 @@ def read_portfolio(filename):
     with open(filename, "rt") as file:
         lines = csv.reader(file)
         keys = next(lines)
-        for line in lines:
+        for lineno, line in enumerate(lines, start=1):
             record = dict(zip(keys, line))
             try:
                 portfolio.append(
@@ -33,7 +33,7 @@ def read_portfolio(filename):
                     }
                 )
             except ValueError:
-                print("Warning: skipping", line, file=sys.stderr)
+                print(f"Skipping {filename}, line {lineno}:", line, file=sys.stderr)
     return portfolio
 
 def portfolio_cost(portfolio):
