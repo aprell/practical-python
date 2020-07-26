@@ -16,9 +16,9 @@ while principal > payment:
     if extra_payment_start_month <= month <= extra_payment_end_month:
         principal -= extra_payment
         total_paid += extra_payment
-    print(f"{month:5d}{total_paid:12.2f}{principal:12.2f}")
+    print(f"{month:5d}{total_paid:12,.2f}{principal:12,.2f}")
     month += 1
 
 total_paid += principal
 principal = 0
-print(f"{month:5d}{total_paid:12.2f}{principal:12.2f}")
+print(f"{month:5d}{total_paid:12,.2f}{principal:12,.2f}")
