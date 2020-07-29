@@ -1,7 +1,7 @@
 # Exercises 2.4-2.7
 # Exercises 2.9-2.12
 # Exercises 2.16, 2.20, 2.24, 2.25
-# Exercises 3.1, 3.2, 3.12
+# Exercises 3.1, 3.2, 3.12, 3.15, 3.16
 
 from copy import deepcopy
 from fileparse import parse_csv
@@ -69,9 +69,9 @@ def portfolio_report(portfolio_filename, prices_filename):
     prices = read_prices(prices_filename)
     print_report(portfolio, prices)
 
-if __name__ == "__main__":
-    if len(sys.argv) == 2:
-        filename = sys.argv[1]
+def main(argv):
+    if len(argv) == 2:
+        filename = argv[1]
     else:
         filename = "Data/portfolio.csv"
 
@@ -86,3 +86,6 @@ if __name__ == "__main__":
     #print(f"{value:,.2f} - {cost:,.2f} = {value - cost:,.2f}")
 
     portfolio_report(filename, "Data/prices.csv")
+
+if __name__ == "__main__":
+    main(sys.argv)
