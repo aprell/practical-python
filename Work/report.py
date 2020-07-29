@@ -1,39 +1,29 @@
 # Exercises 2.4-2.7
 # Exercises 2.9-2.12
 # Exercises 2.16, 2.20, 2.24, 2.25
-# Exercises 3.1, 3.2
+# Exercises 3.1, 3.2, 3.12
 
 from copy import deepcopy
-import csv
+from fileparse import parse_csv
 import sys
 
 def read_prices(filename):
-    prices = {}
-    with open(filename, "rt") as file:
-        lines = csv.reader(file)
-        for lineno, line in enumerate(lines, start=1):
-            try:
-                prices[line[0]] = float(line[1])
-            except (IndexError, ValueError):
-                print(f"Skipping {filename}, line {lineno}:", line, file=sys.stderr)
-    return prices
+    prices = parse_csv(
+        filename,
+        has_headers=False,
+        types=[str, float]
+    )
+    return {
+        name: price for name, price in prices
+    }
 
 def read_portfolio(filename):
-    portfolio = []
-    with open(filename, "rt") as file:
-        lines = csv.reader(file)
-        keys = next(lines)
-        # Keys of interest and the types of their values
-        types = {"name": str, "shares": int, "price": float}
-        for lineno, line in enumerate(lines, start=1):
-            record = dict(zip(keys, line))
-            try:
-                portfolio.append({
-                    name: cast(record[name]) for name, cast in types.items()
-                })
-            except ValueError:
-                print(f"Skipping {filename}, line {lineno}:", line, file=sys.stderr)
-    return portfolio
+    return parse_csv(
+        filename,
+        has_headers=True,
+        select=["name", "shares", "price"],
+        types={"shares": int, "price": float}
+    )
 
 def portfolio_cost(portfolio, verbose=True):
     if verbose:
