@@ -69,19 +69,20 @@ def portfolio_report(portfolio_filename, prices_filename):
     prices = read_prices(prices_filename)
     print_report(portfolio, prices)
 
-if len(sys.argv) == 2:
-    filename = sys.argv[1]
-else:
-    filename = "Data/portfolio.csv"
+if __name__ == "__main__":
+    if len(sys.argv) == 2:
+        filename = sys.argv[1]
+    else:
+        filename = "Data/portfolio.csv"
 
-#portfolio = read_portfolio(filename)
-#cost = portfolio_cost(portfolio, verbose=False)
-#print(f"\n\u2211 {cost:,.2f}\n")
+    #portfolio = read_portfolio(filename)
+    #cost = portfolio_cost(portfolio, verbose=False)
+    #print(f"\n\u2211 {cost:,.2f}\n")
 
-#prices = read_prices("Data/prices.csv")
-#value = portfolio_value(portfolio, prices, verbose=False)
-#print(f"\n\u2211 {value:,.2f}\n")
+    #prices = read_prices("Data/prices.csv")
+    #value = portfolio_value(portfolio, prices, verbose=False)
+    #print(f"\n\u2211 {value:,.2f}\n")
 
-#print(f"{value:,.2f} - {cost:,.2f} = {value - cost:,.2f}")
+    #print(f"{value:,.2f} - {cost:,.2f} = {value - cost:,.2f}")
 
-portfolio_report(filename, "Data/prices.csv")
+    portfolio_report(filename, "Data/prices.csv")

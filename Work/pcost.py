@@ -1,25 +1,15 @@
 # Exercises 1.27, 1.30-1.33
 # Exercises 2.15, 2.16
+# Exercise 3.14
 
-import csv
+from report import read_portfolio
 import sys
 
 def portfolio_cost(filename):
+    portfolio = read_portfolio(filename)
     portfolio_price = 0
-    with open(filename, "rt") as file:
-        lines = csv.reader(file)
-        keys = next(lines)
-        for lineno, line in enumerate(lines, start=1):
-            record = dict(zip(keys, line))
-            try:
-                name = record["name"]
-                shares = int(record["shares"])
-                price = float(record["price"])
-                purchase_price = shares * price
-                print(f"{name:5}: {shares:3} x {price:5.2f} = {purchase_price:8.2f}")
-                portfolio_price += purchase_price
-            except ValueError:
-                print(f"Missing data in line {lineno}:", line, file=sys.stderr)
+    for holding in portfolio:
+        portfolio_price += holding["shares"] * holding["price"]
     return portfolio_price
 
 if len(sys.argv) == 2:
@@ -27,4 +17,4 @@ if len(sys.argv) == 2:
 else:
     filename = "Data/portfolio.csv"
 
-print("\n\u2211", portfolio_cost(filename))
+print("\u2211", portfolio_cost(filename))
