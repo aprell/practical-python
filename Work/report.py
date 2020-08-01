@@ -1,29 +1,30 @@
 # Exercises 2.4-2.7
 # Exercises 2.9-2.12
 # Exercises 2.16, 2.20, 2.24, 2.25
-# Exercises 3.1, 3.2, 3.12, 3.15, 3.16
+# Exercises 3.1, 3.2, 3.12, 3.15, 3.16, 3.18
 
 from copy import deepcopy
 from fileparse import parse_csv
 import sys
 
 def read_prices(filename):
-    prices = parse_csv(
-        filename,
-        has_headers=False,
-        types=[str, float]
-    )
-    return {
-        name: price for name, price in prices
-    }
+    with open(filename, "rt") as file:
+        return {
+            name: price for name, price in parse_csv(
+                file,
+                has_headers=False,
+                types=[str, float]
+            )
+        }
 
 def read_portfolio(filename):
-    return parse_csv(
-        filename,
-        has_headers=True,
-        select=["name", "shares", "price"],
-        types={"shares": int, "price": float}
-    )
+    with open(filename, "rt") as file:
+        return parse_csv(
+            file,
+            has_headers=True,
+            select=["name", "shares", "price"],
+            types={"shares": int, "price": float}
+        )
 
 def portfolio_cost(portfolio, verbose=True):
     if verbose:
