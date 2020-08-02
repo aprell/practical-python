@@ -1,4 +1,4 @@
-# Exercises 4.5-4.7
+# Exercises 4.5-4.7, 4.10
 
 # Abstract base class
 class TableFormatter:
@@ -43,3 +43,9 @@ def create_formatter(fmt):
         return HTMLTableFormatter
     else:
         raise RuntimeError("Unknown format " + fmt)
+
+def print_table(table, columns, formatter):
+    formatter.headings(columns)
+    table = [[str(getattr(row, column)) for column in columns] for row in table]
+    for row in table:
+        formatter.row(row)
