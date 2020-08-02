@@ -2,46 +2,51 @@
 # Exercises 2.9-2.12
 # Exercises 2.16, 2.20, 2.24, 2.25
 # Exercises 3.1, 3.2, 3.12, 3.15, 3.16, 3.18
+# Exercises 4.3, 4.4
 
 from copy import deepcopy
 from fileparse import parse_csv
+from stock import Stock
 import sys
 
 def read_prices(filename):
     with open(filename, "rt") as file:
-        return {
-            name: price for name, price in parse_csv(
-                file,
-                has_headers=False,
-                types=[str, float]
-            )
-        }
+        prices = parse_csv(
+            file,
+            has_headers=False,
+            types=[str, float]
+        )
+    return {
+        name: price for name, price in prices
+    }
 
 def read_portfolio(filename):
     with open(filename, "rt") as file:
-        return parse_csv(
+        portfolio = parse_csv(
             file,
             has_headers=True,
             select=["name", "shares", "price"],
             types={"shares": int, "price": float}
         )
+    return [
+        Stock(holding["name"], holding["shares"], holding["price"]) for holding in portfolio
+    ]
 
 def portfolio_cost(portfolio, verbose=True):
     if verbose:
         portfolio_price = 0
         for holding in portfolio:
-            name, shares, price = holding["name"], holding["shares"], holding["price"]
-            purchase_price = shares * price
-            print(f"{name:5}: {shares:3} x {price:6.2f} = {purchase_price:10,.2f}")
+            purchase_price = holding.cost()
+            print(f"{holding.name:5}: {holding.shares:3} x {holding.price:6.2f} = {purchase_price:10,.2f}")
             portfolio_price += purchase_price
         return portfolio_price
     else:
-        return sum([holding["shares"] * holding["price"] for holding in portfolio])
+        return sum([holding.cost() for holding in portfolio])
 
 def portfolio_value(portfolio, prices, verbose=True):
     portfolio = deepcopy(portfolio)
     for holding in portfolio:
-        holding["price"] = prices[holding["name"]]
+        holding.price = prices[holding.name]
     return portfolio_cost(portfolio, verbose)
 
 def make_report(portfolio, prices):
@@ -49,10 +54,10 @@ def make_report(portfolio, prices):
     for holding in portfolio:
         report.append(
             {
-                "name": holding["name"],
-                "shares": holding["shares"],
-                "price": prices[holding["name"]],
-                "change": prices[holding["name"]] - holding["price"]
+                "name": holding.name,
+                "shares": holding.shares,
+                "price": prices[holding.name],
+                "change": prices[holding.name] - holding.price
             }
         )
     return report
