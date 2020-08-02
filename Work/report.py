@@ -7,9 +7,8 @@
 from copy import deepcopy
 from fileparse import parse_csv
 from stock import Stock
-
+from tableformat import create_formatter
 import sys
-import tableformat
 
 def read_prices(filename):
     with open(filename, "rt") as file:
@@ -77,7 +76,7 @@ def print_report(portfolio, prices, formatter):
 def portfolio_report(portfolio_filename, prices_filename, fmt="txt"):
     portfolio = read_portfolio(portfolio_filename)
     prices = read_prices(prices_filename)
-    print_report(portfolio, prices, tableformat.create_formatter(fmt)())
+    print_report(portfolio, prices, create_formatter(fmt)())
 
 def main(argv):
     assert len(argv) >= 2
