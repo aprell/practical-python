@@ -1,4 +1,4 @@
-# Exercises 4.5, 4.6
+# Exercises 4.5-4.7
 
 # Abstract base class
 class TableFormatter:
@@ -33,3 +33,13 @@ class HTMLTableFormatter(TableFormatter):
 
     def row(self, data):
         print("<tr>" + "".join([f"<td>{field}</td>" for field in data]) + "</tr>")
+
+def create_formatter(fmt):
+    if fmt == "txt":
+        return TextTableFormatter
+    elif fmt == "csv":
+        return CSVTableFormatter
+    elif fmt == "html":
+        return HTMLTableFormatter
+    else:
+        raise RuntimeError("Unknown format " + fmt)

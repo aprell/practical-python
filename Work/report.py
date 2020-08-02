@@ -2,7 +2,7 @@
 # Exercises 2.9-2.12
 # Exercises 2.16, 2.20, 2.24, 2.25
 # Exercises 3.1, 3.2, 3.12, 3.15, 3.16, 3.18
-# Exercises 4.3-4.6
+# Exercises 4.3-4.8
 
 from copy import deepcopy
 from fileparse import parse_csv
@@ -74,16 +74,18 @@ def print_report(portfolio, prices, formatter):
             "%.2f" % line["change"]
         ])
 
-def portfolio_report(portfolio_filename, prices_filename):
+def portfolio_report(portfolio_filename, prices_filename, fmt="txt"):
     portfolio = read_portfolio(portfolio_filename)
     prices = read_prices(prices_filename)
-    print_report(portfolio, prices, tableformat.TextTableFormatter())
+    print_report(portfolio, prices, tableformat.create_formatter(fmt)())
 
 def main(argv):
-    if len(argv) == 2:
-        filename = argv[1]
+    assert len(argv) >= 2
+    filename = argv[1]
+    if len(argv) > 2:
+        fmt = argv[2]
     else:
-        filename = "Data/portfolio.csv"
+        fmt = "txt"
 
     #portfolio = read_portfolio(filename)
     #cost = portfolio_cost(portfolio, verbose=False)
@@ -95,7 +97,7 @@ def main(argv):
 
     #print(f"{value:,.2f} - {cost:,.2f} = {value - cost:,.2f}")
 
-    portfolio_report(filename, "Data/prices.csv")
+    portfolio_report(filename, "Data/prices.csv", fmt)
 
 if __name__ == "__main__":
     main(sys.argv)
