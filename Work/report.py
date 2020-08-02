@@ -2,12 +2,14 @@
 # Exercises 2.9-2.12
 # Exercises 2.16, 2.20, 2.24, 2.25
 # Exercises 3.1, 3.2, 3.12, 3.15, 3.16, 3.18
-# Exercises 4.3, 4.4
+# Exercises 4.3-4.6
 
 from copy import deepcopy
 from fileparse import parse_csv
 from stock import Stock
+
 import sys
+import tableformat
 
 def read_prices(filename):
     with open(filename, "rt") as file:
@@ -62,18 +64,20 @@ def make_report(portfolio, prices):
         )
     return report
 
-def print_report(portfolio, prices):
-    headers = ("Name", "Shares", "Price", "Change")
-    print("%10s %10s %10s %10s" % headers)
-    print(" ".join((10 * "-",) * len(headers)))
+def print_report(portfolio, prices, formatter):
+    formatter.headings(["Name", "Shares", "Price", "Change"])
     for line in make_report(portfolio, prices):
-        line["price"] = "$%.2f" % line["price"]
-        print("{name:>10s} {shares:>10d} {price:>10s} {change:>+10.2f}".format_map(line))
+        formatter.row([
+            line["name"],
+            str(line["shares"]),
+            "$%.2f" % line["price"],
+            "%.2f" % line["change"]
+        ])
 
 def portfolio_report(portfolio_filename, prices_filename):
     portfolio = read_portfolio(portfolio_filename)
     prices = read_prices(prices_filename)
-    print_report(portfolio, prices)
+    print_report(portfolio, prices, tableformat.TextTableFormatter())
 
 def main(argv):
     if len(argv) == 2:
