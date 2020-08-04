@@ -2,16 +2,14 @@
 # Exercises 2.15, 2.16
 # Exercises 3.14-3.16
 # Exercises 4.3, 4.4
+# Exercise 6.2
 
 from report import read_portfolio
 import sys
 
 def portfolio_cost(filename):
     portfolio = read_portfolio(filename)
-    portfolio_price = 0
-    for holding in portfolio:
-        portfolio_price += holding.cost
-    return portfolio_price
+    return portfolio.total_cost
 
 def main(argv):
     if len(argv) == 2:

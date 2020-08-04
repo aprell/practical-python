@@ -4,9 +4,11 @@
 # Exercises 3.1, 3.2, 3.12, 3.15, 3.16, 3.18
 # Exercises 4.3-4.8
 # Exercise 5.6
+# Exercise 6.2
 
 from copy import deepcopy
 from fileparse import parse_csv
+from portfolio import Portfolio
 from stock import Stock
 from tableformat import create_formatter
 import sys
@@ -30,9 +32,9 @@ def read_portfolio(filename):
             select=["name", "shares", "price"],
             types={"shares": int, "price": float}
         )
-    return [
+    return Portfolio([
         Stock(holding["name"], holding["shares"], holding["price"]) for holding in portfolio
-    ]
+    ])
 
 def portfolio_cost(portfolio, verbose=True):
     if verbose:
@@ -43,7 +45,7 @@ def portfolio_cost(portfolio, verbose=True):
             portfolio_price += purchase_price
         return portfolio_price
     else:
-        return sum([holding.cost for holding in portfolio])
+        return portfolio.total_cost
 
 def portfolio_value(portfolio, prices, verbose=True):
     portfolio = deepcopy(portfolio)
