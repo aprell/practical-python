@@ -1,7 +1,9 @@
 # Exercises 4.1, 4.2, 4.9
-# Exercises 5.6, 5.7
+# Exercises 5.6-5.8
 
 class Stock:
+    __slots__ = ("name", "_shares", "price")
+
     def __init__(self, name, shares, price):
         self.name = name
         self.shares = shares
