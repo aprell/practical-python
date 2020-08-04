@@ -1,4 +1,5 @@
 # Exercises 4.1, 4.2, 4.9
+# Exercise 5.6
 
 class Stock:
     def __init__(self, name, shares, price):
@@ -9,6 +10,7 @@ class Stock:
     def __repr__(self):
         return f"Stock({self.name}, {self.shares}, {self.price:.2f})"
 
+    @property
     def cost(self):
         return self.shares * self.price
 
