@@ -1,5 +1,5 @@
 # Exercises 4.1, 4.2, 4.9
-# Exercise 5.6
+# Exercises 5.6, 5.7
 
 class Stock:
     def __init__(self, name, shares, price):
@@ -9,6 +9,16 @@ class Stock:
 
     def __repr__(self):
         return f"Stock({self.name}, {self.shares}, {self.price:.2f})"
+
+    @property
+    def shares(self):
+        return self._shares
+
+    @shares.setter
+    def shares(self, shares):
+        if type(shares) is not int:
+            raise TypeError("Expected int")
+        self._shares = shares
 
     @property
     def cost(self):
