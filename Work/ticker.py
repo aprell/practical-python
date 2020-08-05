@@ -1,4 +1,4 @@
-# Exercises 6.10, 6.11
+# Exercises 6.10-6.12
 
 import csv
 from follow import follow
@@ -27,12 +27,24 @@ def parse_stock_data(lines):
     rows = make_dicts(rows, ["name", "price", "change"])
     return rows
 
-if __name__ == "__main__":
+def ticker(filename, logfilename, fmt):
     from report import read_portfolio
+    from tableformat import create_formatter
 
-    portfolio = read_portfolio("Data/portfolio.csv")
-    lines = follow("Data/stocklog.csv")
+    portfolio = read_portfolio(filename)
+    lines = follow(logfilename)
     rows = parse_stock_data(lines)
     rows = filter_names(rows, portfolio)
+    formatter = create_formatter(fmt)()
+
+    formatter.headings(["Name", "Price", "Change"])
+
     for row in rows:
-        print(row)
+        formatter.row([
+            row["name"],
+            "$%.2f" % row["price"],
+            "%.2f" % row["change"]
+        ])
+
+if __name__ == "__main__":
+    ticker("Data/portfolio.csv", "Data/stocklog.csv", "txt")
