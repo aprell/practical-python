@@ -1,4 +1,4 @@
-# Exercise 6.10
+# Exercises 6.10, 6.11
 
 import csv
 from follow import follow
@@ -15,6 +15,11 @@ def make_dicts(rows, headers):
     for row in rows:
         yield dict(zip(headers, row))
 
+def filter_names(rows, names):
+    for row in rows:
+        if row["name"] in names:
+            yield row
+
 def parse_stock_data(lines):
     rows = csv.reader(lines)
     rows = select_columns(rows, [0, 1, 4])
@@ -23,7 +28,11 @@ def parse_stock_data(lines):
     return rows
 
 if __name__ == "__main__":
+    from report import read_portfolio
+
+    portfolio = read_portfolio("Data/portfolio.csv")
     lines = follow("Data/stocklog.csv")
     rows = parse_stock_data(lines)
+    rows = filter_names(rows, portfolio)
     for row in rows:
         print(row)
