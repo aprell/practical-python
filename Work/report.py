@@ -5,6 +5,7 @@
 # Exercises 4.3-4.8
 # Exercise 5.6
 # Exercise 6.2
+# Exercise 7.3
 
 from fileparse import parse_csv
 from portfolio import Portfolio
@@ -32,7 +33,7 @@ def read_portfolio(filename):
             types={"shares": int, "price": float}
         )
     return Portfolio([
-        Stock(holding["name"], holding["shares"], holding["price"]) for holding in portfolio
+        Stock(**holding) for holding in portfolio
     ])
 
 def make_report(portfolio, prices):
