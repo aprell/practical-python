@@ -5,7 +5,7 @@
 # Exercises 4.3-4.8
 # Exercise 5.6
 # Exercise 6.2
-# Exercise 7.3
+# Exercises 7.3, 7.4
 
 from fileparse import parse_csv
 from portfolio import Portfolio
@@ -13,24 +13,26 @@ from stock import Stock
 from tableformat import create_formatter
 import sys
 
-def read_prices(filename):
+def read_prices(filename, **opts):
     with open(filename, "rt") as file:
         prices = parse_csv(
             file,
             has_headers=False,
-            types=[str, float]
+            types=[str, float],
+            **opts
         )
     return {
         name: price for name, price in prices
     }
 
-def read_portfolio(filename):
+def read_portfolio(filename, **opts):
     with open(filename, "rt") as file:
         portfolio = parse_csv(
             file,
             has_headers=True,
             select=["name", "shares", "price"],
-            types={"shares": int, "price": float}
+            types={"shares": int, "price": float},
+            **opts
         )
     return Portfolio([
         Stock(**holding) for holding in portfolio
@@ -60,8 +62,8 @@ def print_report(portfolio, prices, formatter):
         ])
 
 def portfolio_report(portfolio_filename, prices_filename, fmt="txt"):
-    portfolio = read_portfolio(portfolio_filename)
-    prices = read_prices(prices_filename)
+    portfolio = read_portfolio(portfolio_filename, silence_errors=True)
+    prices = read_prices(prices_filename, silence_errors=True)
     print_report(portfolio, prices, create_formatter(fmt)())
 
 def main(argv):
