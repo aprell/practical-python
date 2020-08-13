@@ -3,6 +3,7 @@
 # Exercises 3.14-3.16
 # Exercises 4.3, 4.4
 # Exercise 6.2
+# Exercise 8.3
 
 from report import read_portfolio
 import sys
@@ -20,4 +21,6 @@ def main(argv):
     print("\u2211", portfolio_cost(filename))
 
 if __name__ == "__main__":
+    import logging
+    logging.basicConfig(level=logging.ERROR)
     main(sys.argv)

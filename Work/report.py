@@ -6,6 +6,7 @@
 # Exercise 5.6
 # Exercise 6.2
 # Exercises 7.3, 7.4, 7.11
+# Exercise 8.3
 
 from fileparse import parse_csv
 from portfolio import Portfolio
@@ -52,8 +53,8 @@ def print_report(portfolio, prices, formatter):
         ])
 
 def portfolio_report(portfolio_filename, prices_filename, fmt="txt"):
-    portfolio = read_portfolio(portfolio_filename, silence_errors=True)
-    prices = read_prices(prices_filename, silence_errors=True)
+    portfolio = read_portfolio(portfolio_filename)
+    prices = read_prices(prices_filename)
     print_report(portfolio, prices, create_formatter(fmt)())
 
 def main(argv):
@@ -67,4 +68,6 @@ def main(argv):
     portfolio_report(filename, "Data/prices.csv", fmt)
 
 if __name__ == "__main__":
+    import logging
+    logging.basicConfig(level=logging.ERROR)
     main(sys.argv)

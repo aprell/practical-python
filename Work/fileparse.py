@@ -6,7 +6,7 @@ import logging
 
 log = logging.getLogger(__name__)
 
-def parse_csv_dicts(lines, delimiter, select=None, types=None, silence_errors=False):
+def parse_csv_dicts(lines, delimiter, select=None, types=None):
     """
     Parse lines in CSV format into a list of dicts
     """
@@ -39,13 +39,12 @@ def parse_csv_dicts(lines, delimiter, select=None, types=None, silence_errors=Fa
             else:
                 records.append(dict(zip(keys, line)))
         except ValueError as err:
-            if not silence_errors:
-                log.warning("Skipping line %d: %s", lineno, line)
-                log.debug("Reason: %s", err)
+            log.warning("Skipping line %d: %s", lineno, line)
+            log.debug("Reason: %s", err)
 
     return records
 
-def parse_csv_tuples(lines, delimiter, types=None, silence_errors=False):
+def parse_csv_tuples(lines, delimiter, types=None):
     """
     Parse lines in CSV format into a list of tuples
     """
@@ -61,22 +60,21 @@ def parse_csv_tuples(lines, delimiter, types=None, silence_errors=False):
                 line = [convert(val) for convert, val in zip(types, line)]
             records.append(tuple(line))
         except ValueError as err:
-            if not silence_errors:
-                log.warning("Skipping line %d: %s", lineno, line)
-                log.debug("Reason: %s", err)
+            log.warning("Skipping line %d: %s", lineno, line)
+            log.debug("Reason: %s", err)
 
     return records
 
 # The revenge for straying off course...
-def parse_csv(lines, has_headers, delimiter=',', select=None, types=None, silence_errors=False):
+def parse_csv(lines, has_headers, delimiter=',', select=None, types=None):
     assert type(lines) is not str
     if has_headers:
         if types:
             assert type(types) is dict
-        return parse_csv_dicts(lines, delimiter, select, types, silence_errors)
+        return parse_csv_dicts(lines, delimiter, select, types)
     else:
         if select:
             raise RuntimeError("select requires column names")
         if types:
             assert type(types) is list
-        return parse_csv_tuples(lines, delimiter, types, silence_errors)
+        return parse_csv_tuples(lines, delimiter, types)
