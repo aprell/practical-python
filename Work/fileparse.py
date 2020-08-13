@@ -1,7 +1,10 @@
 # Exercises 3.3-3.10, 3.17
+# Exercise 8.2
 
 import csv
-import sys
+import logging
+
+log = logging.getLogger(__name__)
 
 def parse_csv_dicts(lines, delimiter, select=None, types=None, silence_errors=False):
     """
@@ -37,8 +40,8 @@ def parse_csv_dicts(lines, delimiter, select=None, types=None, silence_errors=Fa
                 records.append(dict(zip(keys, line)))
         except ValueError as err:
             if not silence_errors:
-                print(f"Skipping line {lineno}:", line, file=sys.stderr)
-                print(f"Reason:", err, file=sys.stderr)
+                log.warning("Skipping line %d: %s", lineno, line)
+                log.debug("Reason: %s", err)
 
     return records
 
@@ -59,8 +62,8 @@ def parse_csv_tuples(lines, delimiter, types=None, silence_errors=False):
             records.append(tuple(line))
         except ValueError as err:
             if not silence_errors:
-                print(f"Skipping line {lineno}:", line, file=sys.stderr)
-                print(f"Reason:", err, file=sys.stderr)
+                log.warning("Skipping line %d: %s", lineno, line)
+                log.debug("Reason: %s", err)
 
     return records
 
