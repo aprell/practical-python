@@ -7,7 +7,7 @@
 # Exercise 6.2
 # Exercises 7.3, 7.4, 7.11
 # Exercise 8.3
-# Exercises 9.1, 9.2
+# Exercises 9.1-9.3
 
 from .fileparse import parse_csv
 from .portfolio import Portfolio
@@ -59,6 +59,9 @@ def portfolio_report(portfolio_filename, prices_filename, fmt="txt"):
     print_report(portfolio, prices, create_formatter(fmt)())
 
 def main(argv):
+    import logging
+    logging.basicConfig(level=logging.ERROR)
+
     assert len(argv) >= 2
     filename = argv[1]
     if len(argv) > 2:
@@ -69,6 +72,4 @@ def main(argv):
     portfolio_report(filename, "prices.csv", fmt)
 
 if __name__ == "__main__":
-    import logging
-    logging.basicConfig(level=logging.ERROR)
     main(sys.argv)
