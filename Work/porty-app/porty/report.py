@@ -7,7 +7,7 @@
 # Exercise 6.2
 # Exercises 7.3, 7.4, 7.11
 # Exercise 8.3
-# Exercise 9.1
+# Exercises 9.1, 9.2
 
 from .fileparse import parse_csv
 from .portfolio import Portfolio
@@ -66,7 +66,7 @@ def main(argv):
     else:
         fmt = "txt"
 
-    portfolio_report(filename, "Data/prices.csv", fmt)
+    portfolio_report(filename, "prices.csv", fmt)
 
 if __name__ == "__main__":
     import logging
