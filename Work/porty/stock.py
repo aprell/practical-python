@@ -1,8 +1,9 @@
 # Exercises 4.1, 4.2, 4.9
 # Exercises 5.6-5.8
 # Exercises 7.7-7.9
+# Exercise 9.1
 
-from typedproperty import String, Integer, Float
+from .typedproperty import String, Integer, Float
 
 class Stock:
     __slots__ = ("_name", "_shares", "_price")

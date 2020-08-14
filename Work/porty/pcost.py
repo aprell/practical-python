@@ -4,8 +4,9 @@
 # Exercises 4.3, 4.4
 # Exercise 6.2
 # Exercise 8.3
+# Exercise 9.1
 
-from report import read_portfolio
+from .report import read_portfolio
 import sys
 
 def portfolio_cost(filename):

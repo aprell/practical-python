@@ -1,4 +1,5 @@
 # Exercises 6.5-6.7
+# Exercise 9.1
 
 import os
 import time
@@ -14,7 +15,7 @@ def follow(filename):
             yield line
 
 if __name__ == "__main__":
-    from report import read_portfolio
+    from .report import read_portfolio
 
     portfolio = read_portfolio("Data/portfolio.csv")
 

@@ -1,8 +1,9 @@
 # Exercises 6.2, 6.3, 6.14
 # Exercise 7.11
+# Exercise 9.1
 
-from fileparse import parse_csv
-from stock import Stock
+from .fileparse import parse_csv
+from .stock import Stock
 
 class Portfolio:
     def __init__(self):

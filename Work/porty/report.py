@@ -7,10 +7,11 @@
 # Exercise 6.2
 # Exercises 7.3, 7.4, 7.11
 # Exercise 8.3
+# Exercise 9.1
 
-from fileparse import parse_csv
-from portfolio import Portfolio
-from tableformat import create_formatter
+from .fileparse import parse_csv
+from .portfolio import Portfolio
+from .tableformat import create_formatter
 import sys
 
 def read_prices(filename, **opts):

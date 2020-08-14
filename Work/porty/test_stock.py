@@ -1,6 +1,7 @@
 # Exercise 8.1
+# Exercise 9.1
 
-from stock import Stock
+from .stock import Stock
 import unittest
 
 class TestStock(unittest.TestCase):

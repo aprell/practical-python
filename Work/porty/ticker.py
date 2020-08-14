@@ -1,7 +1,8 @@
 # Exercises 6.10-6.12
+# Exercise 9.1
 
 import csv
-from follow import follow
+from .follow import follow
 
 def select_columns(rows, indices):
     for row in rows:
@@ -28,8 +29,8 @@ def parse_stock_data(lines):
     return rows
 
 def ticker(filename, logfilename, fmt):
-    from report import read_portfolio
-    from tableformat import create_formatter
+    from .report import read_portfolio
+    from .tableformat import create_formatter
 
     portfolio = read_portfolio(filename)
     lines = follow(logfilename)
